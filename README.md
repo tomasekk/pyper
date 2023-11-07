@@ -2,7 +2,7 @@
 
 ## Installation
 
-Please install the library by clonning file `pyper.py` to your folder where you program.
+Please install the library by clonning file `pyper.py` to your folder where is your program.
 
 ## Usage
 
