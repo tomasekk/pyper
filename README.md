@@ -45,6 +45,9 @@ Please install the library by clonning file `pyper.py` to your folder where you 
 
 # Contact
 
-Author of the project
+**Author of the project**
 
 [Ondrej Tomasek - LinkedIn](https://linkedin.com/in/ondrat)
+
+[![LinkedIn Logo](https://store-images.s-microsoft.com/image/apps.31120.9007199266245564.44dc7699-748d-4c34-ba5e-d04eb48f7960.bc4172bd-63f0-455a-9acd-5457f44e4473)](https://linkedin.com/in/ondrat)
+
