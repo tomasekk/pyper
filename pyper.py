@@ -24,7 +24,7 @@ class Generate:
         #       + Generates ID which length is 4 and excluded numbers are 0 and 5
 
         @staticmethod
-        def ID(length=3, excluded_numbers=[]):
+        def ID(length=3, excluded_numbers=[], log_history = False):
 
             if len(excluded_numbers) > 9:
                 raise ValueError("Excluded too many numbers, ID can not be generated.")
@@ -36,6 +36,10 @@ class Generate:
                 num = str(random.randint(0, 9))
                 if num not in map(str, excluded_numbers):
                     random_id += num
+
+            if log_history:
+                HistoryManager.add_to_history(int(random_id))
+
             return int(random_id)
 
         # Generate multiple random IDs and get them in LIST
@@ -48,14 +52,14 @@ class Generate:
         #       + Generates 7 IDs which each length is 4 and excluded numbers are 0 and 5
 
         @staticmethod
-        def IDs(how_many=3, length_of_each_one=3, excluded_numbers=[]):
+        def IDs(how_many=3, length_of_each_one=3, excluded_numbers=[], log_history = False):
 
             if how_many < 1:
                 raise ValueError("Length is set to 0 or negative, ID can not be generated.")
 
             ran_ids = []
             for i in range(how_many):
-                ran_id = Generate.Id.ID(length_of_each_one, excluded_numbers)
+                ran_id = Generate.Id.ID(length_of_each_one, excluded_numbers, log_history)
                 ran_ids.append(ran_id)
             return ran_ids
 
@@ -71,7 +75,7 @@ class Generate:
         #       + Generates password with length of 4 and excluded characters "a" and "c"
 
         @staticmethod
-        def Password(length=10, excluded_chars=[]):
+        def Password(length=10, excluded_chars=[], log_history = False):
             try:
                 characters = [char for char in string.ascii_letters + string.digits + string.punctuation if
                               char not in excluded_chars]
@@ -82,6 +86,9 @@ class Generate:
                 raise ValueError("Password length is too long given the excluded characters.")
 
             password = ''.join(random.choice(characters) for _ in range(length))
+
+            if log_history:
+                HistoryManager.add_to_history(password)
 
             return password
 
@@ -95,7 +102,7 @@ class Generate:
         #       + Generates 10 random passwords with each length of 4 and excluded characters "a" and "c"
 
         @staticmethod
-        def Passwords(how_many=3, length_of_each_one=10, excluded_chars=[]):
+        def Passwords(how_many=3, length_of_each_one=10, excluded_chars=[], log_history = False):
 
             if how_many < 1:
                 raise ValueError("Length is set to 0 or negative, ID can not be generated.")
@@ -107,7 +114,21 @@ class Generate:
 
             return list(pwds)
 
+history = []
 
+class HistoryManager:
+    @staticmethod
+    def add_to_history(item):
+        history.append(item)
+
+    @staticmethod
+    def removeLast_from_history():
+        history.pop()
+
+    @staticmethod
+    def clear_history():
+        global history
+        history = []
 
 
 
