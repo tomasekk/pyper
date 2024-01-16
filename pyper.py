@@ -10,19 +10,56 @@
 # GLOBAL IMPORTS
 import random
 import string
+import requests
 
+class API:
+    def send_api_request(url, method='GET', data=None, headers=None, params=None):
+    """
+    Send an API request and return the response.
+
+    Parameters:
+    - url (str): The API endpoint URL.
+    - method (str): The HTTP method (default is 'GET').
+    - data (dict): The data to be sent in the request body (for POST, PUT, etc.).
+    - headers (dict): Additional headers to include in the request.
+    - params (dict): URL parameters.
+
+    Returns:
+    - requests.Response: The response object.
+    """
+    
+    # Choose the appropriate requests method based on the provided HTTP method
+    method = method.upper()
+    if method not in ['GET', 'POST', 'PUT', 'DELETE']:
+        raise ValueError("Invalid HTTP method. Supported methods are GET, POST, PUT, DELETE.")
+
+    # Prepare the request
+    if method == 'GET':
+        response = requests.get(url, headers=headers, params=params)
+    elif method == 'POST':
+        response = requests.post(url, headers=headers, json=data, params=params)
+    elif method == 'PUT':
+        response = requests.put(url, headers=headers, json=data, params=params)
+    elif method == 'DELETE':
+        response = requests.delete(url, headers=headers, params=params)
+
+    # Response from the API
+    return response
+    
 class Generate:
 
     class Id:
-
-        # Generate random ID and get it in INT
-        # ARGS:
-        #   length - (optional, default=3) Length of ID
-        #   excluded_numbers - (optional) Numbers in List that you don't want to include in the final ID, input format example: [5, 1, 0]
-        # CALL EXAMPLE:
-        #   ID(4, [0, 5])
-        #       + Generates ID which length is 4 and excluded numbers are 0 and 5
-
+        """
+        Generate random ID and get it in INT
+        
+        Parameters:
+        - length - (optional, default=3) Length of ID
+        - excluded_numbers - (optional) Numbers in List that you don't want to include in the final ID, input format example: [5, 1, 0]
+        CALL EXAMPLE:
+        - ID(4, [0, 5])
+            + Generates ID which length is 4 and excluded numbers are 0 and 5
+        """
+        
         @staticmethod
         def ID(length=3, excluded_numbers=[]):
 
@@ -37,16 +74,19 @@ class Generate:
                 if num not in map(str, excluded_numbers):
                     random_id += num
             return int(random_id)
-
-        # Generate multiple random IDs and get them in LIST
-        # ARGS:
-        #   how_many - (optional, default=3) How many IDs to generate
-        #   length_of_each_one - (optional, default=3) Length of ID
-        #   excluded_numbers - (optional) Numbers in List that you don't want to include in the final ID, input format example: [5, 1, 0]
-        # CALL EXAMPLE:
-        #   IDs(7, 4, [0, 5])
-        #       + Generates 7 IDs which each length is 4 and excluded numbers are 0 and 5
-
+            
+        """
+        Generate multiple random IDs and get them in LIST
+        
+        Parameters:
+        - how_many - (optional, default=3) How many IDs to generate
+        - length_of_each_one - (optional, default=3) Length of ID
+        - excluded_numbers - (optional) Numbers in List that you don't want to include in the final ID, input format example: [5, 1, 0]
+        CALL EXAMPLE:
+        - IDs(7, 4, [0, 5])
+            + Generates 7 IDs which each length is 4 and excluded numbers are 0 and 5
+        """
+        
         @staticmethod
         def IDs(how_many=3, length_of_each_one=3, excluded_numbers=[]):
 
@@ -62,14 +102,17 @@ class Generate:
 
     class Password:
 
-        # GENERATE RANDOM PASSWORD
-        # ARGS:
-        #   length - (optional, default=10) Length of password
-        #   excluded_chars - (optional) Chars in List that you don't want to include in the final password, input format example: ["h", "g", "a"]
-        # CALL EXAMPLE:
-        #   Generate.Password.Password(4, ["a", "c"])
-        #       + Generates password with length of 4 and excluded characters "a" and "c"
-
+        """
+        GENERATE RANDOM PASSWORD
+        
+        Parameters:
+        - length - (optional, default=10) Length of password
+        - excluded_chars - (optional) Chars in List that you don't want to include in the final password, input format example: ["h", "g", "a"]
+        CALL EXAMPLE:
+        - Generate.Password.Password(4, ["a", "c"])
+            + Generates password with length of 4 and excluded characters "a" and "c"
+        """
+        
         @staticmethod
         def Password(length=10, excluded_chars=[]):
             try:
@@ -85,14 +128,17 @@ class Generate:
 
             return password
 
-        # GENERATE RANDOM PASSWORDS and GET THEM IN LIST
-        # ARGS:
-        #   how_many - (optional, default=3) How many Passwords to generate
-        #   length_of_each_one - (optional, default=10) Length of password
-        #   excluded_chars - (optional) Chars in List that you don't want to include in the final password, input format example: ["h", "g", "a"]
-        # CALL EXAMPLE:
-        #   Generate.Password.Passwords(10, 4, ["a", "c"])
-        #       + Generates 10 random passwords with each length of 4 and excluded characters "a" and "c"
+        """
+        GENERATE RANDOM PASSWORDS and GET THEM IN LIST
+        
+        Parameters:
+        - how_many - (optional, default=3) How many Passwords to generate
+        - length_of_each_one - (optional, default=10) Length of password
+        - excluded_chars - (optional) Chars in List that you don't want to include in the final password, input format example: ["h", "g", "a"]
+        CALL EXAMPLE:
+        - Generate.Password.Passwords(10, 4, ["a", "c"])
+            + Generates 10 random passwords with each length of 4 and excluded characters "a" and "c"
+        """
 
         @staticmethod
         def Passwords(how_many=3, length_of_each_one=10, excluded_chars=[]):
